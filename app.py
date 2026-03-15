@@ -13,19 +13,26 @@ def load_model():
     global MODEL, SCALER, META
     try:
         import tensorflow as tf
+
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        MODEL_DIR = os.path.join(BASE_DIR, "model")
 
-        MODEL  = tf.keras.models.load_model(os.path.join(BASE_DIR, "model", "career_model.keras"))
+        print("BASE_DIR:", BASE_DIR)
+        print("MODEL_DIR:", MODEL_DIR)
+        print("FILES:", os.listdir(MODEL_DIR) if os.path.exists(MODEL_DIR) else "MODEL DIR NOT FOUND")
 
-        with open(os.path.join(BASE_DIR, "model", "scaler.pkl"), "rb") as f:
+        MODEL = tf.keras.models.load_model(os.path.join(MODEL_DIR, "career_model.keras"))
+
+        with open(os.path.join(MODEL_DIR, "scaler.pkl"), "rb") as f:
             SCALER = pickle.load(f)
 
-        with open(os.path.join(BASE_DIR, "model", "metadata.json")) as f:
+        with open(os.path.join(MODEL_DIR, "metadata.json")) as f:
             META = json.load(f)
+
         print(f"[OK] ANN loaded — {META['total_params']:,} params, {META['test_accuracy']}% accuracy")
+
     except Exception as e:
-        print(f"[!] Model not loaded: {e}")
-        print("[!] Run: python train_model.py")
+        print("MODEL LOAD ERROR:", e)
 
 load_model()
 
