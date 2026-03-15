@@ -647,7 +647,7 @@ def roadmap():
     rm = ROADMAP_DB.get(role, ROADMAP_DB["AI/ML Engineer"])
     required = rm["required"]
 
-    # Real gap analysis via cosine similarity per skill
+    # gap analysis via cosine similarity per skill
     have    = [r for r in required if any(cosine_similarity([s], [r]) > 0.5 for s in skills)]
     missing = [r for r in required if r not in have]
     readiness = round(len(have) / max(len(required), 1) * 100)
