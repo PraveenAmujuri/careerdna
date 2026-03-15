@@ -1,31 +1,4 @@
-"""
-CareerDNA — ANN Training Script
-=================================
-Trains a multi-class ANN: skill vector → career path prediction
-Architecture:
-  Input(30) → Dense(128, ReLU) + BatchNorm + Dropout(0.3)
-            → Dense(64,  ReLU) + BatchNorm + Dropout(0.2)
-            → Dense(32,  ReLU)
-            → Output(14, Softmax)
-
-NNDL Concepts:
-  - Multi-class ANN with Softmax output layer
-  - ReLU activation (hidden layers)
-  - Batch Normalisation (training stability)
-  - Dropout (30% + 20% regularisation)
-  - Adam optimizer (lr=0.001)
-  - Sparse Categorical Cross-Entropy loss
-  - Early Stopping + ReduceLROnPlateau
-  - MinMaxScaler feature normalisation
-  - Train/Val/Test split (70/15/15)
-  - Backpropagation (automatic via Keras)
-
-Run: python train_model.py
-     (Only needed once. Takes ~1-2 minutes.)
-"""
 print("TRAIN SCRIPT STARTED")
-
-print("START")
 import numpy as np
 import json
 import pickle

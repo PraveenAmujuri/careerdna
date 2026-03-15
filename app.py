@@ -211,7 +211,6 @@ def get_resources(skills: list, role: str = None) -> dict:
 
 # ══════════════════════════════════════════════════════════════
 # ROUTE 1: CAREER PATH PREDICTION
-# Real ANN inference via TensorFlow model
 # ══════════════════════════════════════════════════════════════
 @app.route('/api/career', methods=['POST'])
 def career():
@@ -313,7 +312,6 @@ def career():
 
 # ══════════════════════════════════════════════════════════════
 # ROUTE 2: SKILL DECAY ANALYSIS
-# Real trend regression scoring via market velocity data
 # ══════════════════════════════════════════════════════════════
 @app.route('/api/decay', methods=['POST'])
 def decay():
@@ -383,7 +381,6 @@ def decay():
 
 # ══════════════════════════════════════════════════════════════
 # ROUTE 3: INTERVIEW IQ SCORING
-# Real TF-IDF extraction + cosine similarity per topic
 # ══════════════════════════════════════════════════════════════
 @app.route('/api/interview', methods=['POST'])
 def interview():
@@ -469,7 +466,6 @@ def interview():
 
 # ══════════════════════════════════════════════════════════════
 # ROUTE 4: ATS RESUME CHECKER
-# Real 10-point weighted ATS scoring engine
 # ══════════════════════════════════════════════════════════════
 
 ATS_ROLE_DB = {
@@ -630,7 +626,6 @@ def ats():
 
 # ══════════════════════════════════════════════════════════════
 # ROUTE 5: LEARNING ROADMAP
-# Real gap analysis — compares user skills vs role requirements
 # ══════════════════════════════════════════════════════════════
 
 ROADMAP_DB = {
