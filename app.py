@@ -21,7 +21,7 @@ def load_model():
         print("MODEL_DIR:", MODEL_DIR)
         print("FILES:", os.listdir(MODEL_DIR) if os.path.exists(MODEL_DIR) else "MODEL DIR NOT FOUND")
 
-        MODEL = tf.keras.models.load_model(os.path.join(BASE_DIR, "model", "career_model"))
+        MODEL = tf.keras.models.load_model(os.path.join(MODEL_DIR, "career_model"))
 
         with open(os.path.join(MODEL_DIR, "scaler.pkl"), "rb") as f:
             SCALER = pickle.load(f)
@@ -37,7 +37,7 @@ def load_model():
 load_model()
 
 # ══════════════════════════════════════════════════════════════
-# CORE MATH FUNCTIONS (real AI, no hardcoding)
+# CORE MATH FUNCTIONS 
 # ══════════════════════════════════════════════════════════════
 
 def cosine_similarity(vec_a: list, vec_b: list) -> float:
