@@ -21,7 +21,7 @@ def load_model():
         print("MODEL_DIR:", MODEL_DIR)
         print("FILES:", os.listdir(MODEL_DIR) if os.path.exists(MODEL_DIR) else "MODEL DIR NOT FOUND")
 
-        MODEL = tf.keras.models.load_model(os.path.join(MODEL_DIR, "career_model.keras"))
+        MODEL = tf.keras.models.load_model(os.path.join(BASE_DIR, "model", "career_model"))
 
         with open(os.path.join(MODEL_DIR, "scaler.pkl"), "rb") as f:
             SCALER = pickle.load(f)

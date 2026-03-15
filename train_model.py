@@ -182,7 +182,7 @@ print(f"  Test Loss:     {test_loss:.4f}")
 print(f"  Epochs run:    {len(history.history['loss'])}")
 
 # ── Save ─────────────────────────────────────────────────────
-model.save('model/career_model.keras')
+model.save('model/career_model')
 with open('model/scaler.pkl', 'wb') as f:
     pickle.dump(scaler, f)
 
