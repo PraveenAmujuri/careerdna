@@ -45,7 +45,58 @@
   --ease-out:    cubic-bezier(0, 0, .2, 1);
   --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
 }
+::selection {
+  background: rgba(200,71,13,.35);
+  color: #fff;
+}
+.hero-bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  pointer-events: none;
+}
 
+.flow-path {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+}
+.node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+
+  background: var(--rust);
+  border-radius: 50%;
+
+  box-shadow: 0 0 10px rgba(200,71,13,0.6);
+}
+.node {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+.flow-path {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: draw 2s ease forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+::-moz-selection {
+  background: rgba(200, 71, 13, 0.25);
+  color: var(--ink);
+}
 html { scroll-behavior: smooth; }
 /* #page-home {
   min-height: calc(100vh - var(--nav-h));
@@ -224,9 +275,22 @@ nav.collapsed .logo em {
 /* ══════════════════════════
    PAGES
 ══════════════════════════ */
-.page { display: none; max-width: var(--max); margin: 0 auto; padding: 72px 32px 96px; position: relative; }
-.page.active { display: block; }
+.pages-wrapper {
+  position: relative;
+  min-height: calc(100vh - var(--nav-h));
+}
 
+.page {
+  display: none;
+
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 72px 32px 96px;
+}
+
+.page.active {
+  display: block;
+}
 /* ══════════════════════════
    LANDING PAGE
 ══════════════════════════ */
@@ -368,7 +432,10 @@ nav.collapsed .logo em {
   border-color: var(--ink-40);
   background: rgba(26,23,20,.03);
 }
-
+.submit-btn.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
 .land-stats {
   display: flex;
   gap: 0;
@@ -916,6 +983,7 @@ nav.collapsed .logo em {
   line-height: 1.7;
 }
 
+
 /* ══════════════════════════
    TOOL PAGES
 ══════════════════════════ */
@@ -978,12 +1046,32 @@ textarea, select, input[type=text] {
   outline: none;
   transition: border-color .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
 }
-textarea { padding: 14px; min-height: 120px; resize: vertical; line-height: 1.7; }
+textarea {
+  padding: 16px 18px;       
+  min-height: 160px;         
+  line-height: 1.8;          
+  resize: none;
+  overflow: hidden;
+  background: rgba(255,255,255,.75);
+  border-radius: 10px;
+
+  overflow-y: auto;
+  scrollbar-gutter: stable;  
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* IE/Edge old */
+}
+textarea::-webkit-scrollbar {
+  display: none;             /* Chrome, Edge, Safari */
+}
 select, input[type=text] { padding: 11px 14px; }
 textarea:focus, select:focus, input[type=text]:focus {
   border-color: var(--rust);
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(200,71,13,.08);
+  box-shadow: 0 0 0 4px rgba(200,71,13,.08);
+}
+textarea::placeholder {
+  color: var(--ink-40);
+  line-height: 1.7;
 }
 select { appearance: none; cursor: pointer; }
 
@@ -1477,25 +1565,112 @@ select { appearance: none; cursor: pointer; }
    FOOTER
 ══════════════════════════ */
 footer {
-  border-top: 1px solid var(--border);
-  padding: 32px;
-  margin-top: 72px;
-  position: relative;
-  z-index: 1;
+  background: #11100f;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 32px 32px;
+  margin-top: 80px;
+  color: #d4cfc8;
 }
+
 .foot {
   max-width: var(--max);
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 12px;
+  align-items: start;
 }
-.foot-l { font-size: 12.5px; color: var(--ink-40); }
-.foot-r { font-family: var(--serif); font-size: 16px; color: var(--ink-60); letter-spacing: -.2px; }
-.foot-r em { font-style: italic; color: var(--rust); }
 
+.foot-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.foot-brand {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: #fff;
+}
+
+.foot-brand em {
+  color: var(--rust);
+}
+
+.foot-desc {
+  font-size: 12.5px;
+  color: rgba(255,255,255,.6);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.foot-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.foot-links a {
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.foot-links a:hover {
+  color: var(--rust);
+}
+
+.foot-bottom {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: 12px;
+  color: rgba(255,255,255,.4);
+  text-align: center;
+}
+.foot-contact {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.foot-contact a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.foot-contact a:hover {
+  color: var(--rust);
+}
+
+.foot-meta {
+  font-size: 11.5px;
+  color: rgba(255,255,255,.4);
+}
+
+.foot-meta a {
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+}
+
+.foot-meta a:hover {
+  color: var(--rust);
+}
+
+/* mobile */
+@media (max-width: 700px) {
+  .foot {
+    grid-template-columns: 1fr;
+  }
+}
 /* ══════════════════════════
    ANIMATIONS
 ══════════════════════════ */
@@ -1560,7 +1735,7 @@ footer {
     <div onclick="goPage('howto'); toggleMenu()">How to Use</div>
   </div>
 </div>
-
+<div class="pages-wrapper">
 <!-- ══════════════════════════
      LANDING
 ══════════════════════════ -->
@@ -1589,6 +1764,22 @@ footer {
         How it works
       </button>
     </div>
+    <div class="hero-bg">
+
+  <!-- STEP 2: FLOW PATH -->
+  <svg class="flow-path" viewBox="0 0 400 400">
+    <path d="M50,300 C150,100 250,350 350,150"
+          stroke="var(--rust)"
+          stroke-width="3"
+          fill="none"/>
+  </svg>
+
+  <!-- STEP 3: NODES -->
+  <div class="node" style="top:60%; left:20%"></div>
+  <div class="node" style="top:30%; left:50%"></div>
+  <div class="node" style="top:70%; left:75%"></div>
+
+</div>
   </div>
 
   <div class="land-stats">
@@ -2001,11 +2192,60 @@ footer {
 <!-- ══════════════════════════
      FOOTER
 ══════════════════════════ -->
+</div>
 <footer>
   <div class="foot">
-    <div class="foot-l">© 2025 CareerDNA · AI Career Intelligence</div>
-    <div class="foot-r">Career<em>DNA</em></div>
+
+    <!-- LEFT -->
+    <div class="foot-left">
+      <div class="foot-brand">Career<em>DNA</em></div>
+      <div class="foot-desc">
+        AI-powered platform for analysing your skills, improving your resume, preparing for interviews, and planning your career with clarity.
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+      <div class="foot-links">
+        <a href="#" onclick="goPage('home')">Home</a>
+        <a href="#" onclick="goPage('career')">Career Path</a>
+        <a href="#" onclick="goPage('iq')">Interview IQ</a>
+        <a href="#" onclick="goPage('ats')">ATS Resume</a>
+        <a href="#" onclick="goPage('roadmap')">Roadmap</a>
+      </div>
+
   </div>
+
+  <!-- CONTACT + COPYRIGHT -->
+    <div class="foot-bottom">
+
+      <div class="foot-contact">
+        
+        <a href="mailto:saipraveenamujuri@gmail.com" target="_blank">
+          📧 Gmail
+        </a>
+
+        <a href="https://github.com/PraveenAmujuri" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 .5C5.7.5.9 5.3.9 11.6c0 4.9 3.2 9.1 7.6 10.6.6.1.8-.2.8-.6v-2.2c-3.1.7-3.7-1.3-3.7-1.3-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.7-.7 2.1-1.1.1-.7.4-1.1.7-1.4-2.5-.3-5.1-1.3-5.1-5.7 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.4 1.2a11.6 11.6 0 016.2 0c2.4-1.5 3.4-1.2 3.4-1.2.6 1.6.2 2.9.1 3.2.8.9 1.2 2 1.2 3.3 0 4.4-2.6 5.4-5.1 5.7.4.3.8 1 .8 2v3c0 .4.2.7.8.6 4.4-1.5 7.6-5.7 7.6-10.6C23.1 5.3 18.3.5 12 .5z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <a href="linkedin.com/in/sai-praveen-amujuri-738bb4358/" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.7H9.1V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4c-1.2 0-2.1-.9-2.1-2.1s.9-2.1 2.1-2.1 2.1.9 2.1 2.1-.9 2.1-2.1 2.1zM7.1 20.4H3.5V9h3.6v11.4z"/>
+          </svg>
+          LinkedIn
+        </a>
+
+      </div>
+
+      <div class="foot-meta">
+        © 2026 CareerDNA ·
+        <a href="https://praveenai.tech" target="_blank">praveenai.tech</a>
+      </div>
+
+    </div>
 </footer>
 
 <script>
@@ -2016,6 +2256,12 @@ let cSkills = [], dSkills = [], rmSkills = [], cInterests = [];
 function toggleMenu() {
   document.getElementById('mobile-menu').classList.toggle('open');
 }
+document.querySelectorAll("textarea").forEach(el => {
+  el.addEventListener("input", () => {
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  });
+});
 /* ══════════════════════════════════════════════
    SERVER STATUS
 ══════════════════════════════════════════════ */
@@ -2038,6 +2284,8 @@ async function checkServer() {
   }
 }
 checkServer();
+btn.classList.add("loading");
+btn.innerText = "Analyzing...";
 /* ══════════════════════════════════════════════
    SCROLL-DRIVEN LOGO FOLDING
 ══════════════════════════════════════════════ */
