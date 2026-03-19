@@ -36,8 +36,8 @@
   --sans:        'Instrument Sans', system-ui, sans-serif;
   --mono:        'DM Mono', monospace;
   /* Spacing */
-  --max:         1120px;
-  --nav-h:       62px;
+  --max:         1320px;
+  --nav-h:       68px;
   /* Transitions */
   --ease:        cubic-bezier(.25, .1, .25, 1);
   --ease-out:    cubic-bezier(0, 0, .2, 1);
@@ -45,6 +45,11 @@
 }
 
 html { scroll-behavior: smooth; }
+/* #page-home {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  align-items: center;   
+} */
 
 body {
   background: var(--cream);
@@ -85,11 +90,12 @@ nav {
 .nav-inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 40px;
   height: 100%;
+
   display: flex;
   align-items: center;
-  gap: 2px;
+  justify-content: space-between;
 }
 
 /* ══════════════════════════
@@ -124,43 +130,59 @@ nav {
   color: var(--rust);
   transition: transform 0.6s var(--ease);
 }
- */
 nav.collapsed .logo-fold {
   max-width: 0;
   opacity: 0;
   transform: translateX(-10px);
 }
-
-/* Adjust the em (DNA) position when collapsed so it sits perfectly next to "C" */
 nav.collapsed .logo em {
   transform: translateX(0);
 }
 
-nav.collapsed {
+/* nav.collapsed {
   height: 54px;
   background: rgba(245,240,232,0.98);
-}
+} */
 
 .tab {
-  padding: 0 14px;
-  height: var(--nav-h);
-  display: flex;
-  align-items: center;
-  font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--ink-60);
-  cursor: pointer;
-  border: none;
   background: none;
-  border-bottom: 2px solid transparent;
-  transition: color .2s var(--ease), border-color .2s var(--ease);
-  white-space: nowrap;
-  letter-spacing: -.1px;
-}
-.tab:hover { color: var(--ink); }
-.tab.active { color: var(--ink); border-bottom-color: var(--rust); }
+  border: none;
+  cursor: pointer;
 
+  padding: 6px 0;
+  height: auto;
+
+  transition: color 0.2s var(--ease);
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab.active {
+  color: var(--ink);
+}
+.nav-cta {
+  background: var(--ink);
+  color: var(--cream);
+
+  border: none;
+  border-radius: 6px;
+
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-cta:hover {
+  background: var(--ink-80);
+}
 .nav-status {
   margin-left: auto;
   display: flex;
@@ -170,6 +192,18 @@ nav.collapsed {
   font-size: 11px;
   color: var(--ink-40);
   flex-shrink: 0;
+}
+.tab::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--ink);
+  width: 0;
+  transition: width 0.25s ease;
+}
+
+.tab:hover::after {
+  width: 100%;
 }
 .status-dot {
   width: 6px;
@@ -221,8 +255,8 @@ nav.collapsed {
 .land-hero {
   position: relative;
   z-index: 1;
-  padding: 80px 0 100px;
-  max-width: 820px;
+  padding: none;
+  max-width: none;
 }
 
 .land-kicker {
@@ -248,7 +282,7 @@ nav.collapsed {
 
 .land-hero h1 {
   font-family: var(--serif);
-  font-size: clamp(52px, 7vw, 88px);
+  font-size: clamp(60px, 7vw, 96px);
   font-weight: 400;
   line-height: .95;
   letter-spacing: -2.5px;
@@ -608,7 +642,157 @@ nav.collapsed {
   margin-bottom: 40px;
 }
 @media (max-width: 720px) { .htu-grid { grid-template-columns: 1fr; } }
+/* hide menu button on desktop */
+.menu-btn {
+  display: none;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
+/* mobile styles */
+/* ===== DEFAULT (DESKTOP) ===== */
+
+.menu-btn {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+
+  /* hide desktop nav */
+  .tab {
+    display: none;
+  }
+
+  .nav-status {
+    display: none;
+  }
+
+  /* show hamburger */
+  .menu-btn {
+    display: block;
+    margin-left: auto;
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+
+    padding: 24px;
+
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(.25,.8,.25,1);
+  }
+
+  .mobile-menu.open {
+    transform: translateX(0);
+  }
+
+  /* HEADER */
+  .menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-family: var(--serif);
+    font-size: 22px;
+
+    margin-bottom: 40px;
+  }
+
+  .menu-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  /* LINKS */
+  .menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .menu-links div {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .menu-links div:hover {
+    color: var(--rust);
+    transform: translateX(4px);
+  }
+
+  .page {
+    padding: 80px 32px 100px;
+  }
+  .land-hero h1 {
+    font-size: clamp(36px, 10vw, 52px);
+    letter-spacing: -1.5px;
+  }
+
+  .land-lead {
+    font-size: 15px;
+  }
+
+  .land-stats {
+    flex-direction: column;
+  }
+
+  .land-stat {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .land-stat:last-child {
+    border-bottom: none;
+  }
+
+  .feat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .htu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
 .htu-card {
   background: rgba(255,255,255,.5);
   border: 1px solid var(--border);
@@ -677,14 +861,22 @@ nav.collapsed {
 .htu-tip {
   display: flex;
   gap: 10px;
+  align-items: flex-start;
+
   background: rgba(200,71,13,.05);
   border: 1px solid rgba(200,71,13,.15);
   border-radius: 8px;
+
   padding: 12px 14px;
   margin-top: 16px;
+
   font-size: 12.5px;
   color: var(--ink-60);
   line-height: 1.65;
+}
+.htu-tip span {
+  flex: 1;
+  min-width: 0;
 }
 .htu-tip::before { content: '→'; color: var(--rust); flex-shrink: 0; font-family: var(--mono); font-size: 12px; margin-top: 1px; }
 
@@ -1332,19 +1524,40 @@ footer {
       <em>A</em>
     </div>
     
-    <button class="tab active" onclick="goPage('home',this)">Home</button>
-    <button class="tab" onclick="goPage('career',this)">Career Path</button>
-    <button class="tab" onclick="goPage('iq',this)">Interview IQ</button>
-    <button class="tab" onclick="goPage('ats',this)">ATS Resume</button>
-    <button class="tab" onclick="goPage('roadmap',this)">Roadmap</button>
-    <button class="tab" onclick="goPage('howto',this)">How to Use</button>
+    <div class="nav-links">
+  <button class="tab active" onclick="goPage('home',this)">Home</button>
+  <button class="tab" onclick="goPage('career',this)">Career Path</button>
+  <button class="tab" onclick="goPage('iq',this)">Interview IQ</button>
+  <button class="tab" onclick="goPage('ats',this)">ATS Resume</button>
+  <button class="tab" onclick="goPage('roadmap',this)">Roadmap</button>
+  <button class="tab" onclick="goPage('howto',this)">How to Use</button>
+</div>
     
     <div class="nav-status">
       <div class="status-dot" id="status-dot"></div>
       <span id="status-text">Connecting</span>
     </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <!-- <button class="nav-cta" onclick="goPage('career', document.querySelectorAll('.tab')[1])">
+    Get Started
+  </button> -->
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <div class="menu-header">
+    <span>CareerDNA</span>
+    <button onclick="toggleMenu()">✕</button>
+  </div>
+
+  <div class="menu-links">
+    <div onclick="goPage('home'); toggleMenu()">Home</div>
+    <div onclick="goPage('career'); toggleMenu()">Career Path</div>
+    <div onclick="goPage('iq'); toggleMenu()">Interview IQ</div>
+    <div onclick="goPage('ats'); toggleMenu()">ATS Resume</div>
+    <div onclick="goPage('roadmap'); toggleMenu()">Roadmap</div>
+    <div onclick="goPage('howto'); toggleMenu()">How to Use</div>
+  </div>
+</div>
 
 <!-- ══════════════════════════
      LANDING
@@ -1364,7 +1577,7 @@ footer {
       <span class="dim">Act with clarity.</span>
     </h1>
     <p class="land-lead">
-      Four AI tools that analyse your skills, score your resume, prepare you for interviews, and build a week-by-week learning roadmap — personalised to you.
+        A set of AI tools for analysing your skills, evaluating your resume, preparing for interviews, and generating a personalised learning roadmap.
     </p>
     <div class="land-cta-row">
       <button class="btn-primary" onclick="goPage('career',document.querySelectorAll('.tab')[1])">
@@ -1495,7 +1708,8 @@ footer {
         <div class="htu-step"><div class="htu-step-num">02</div><div class="htu-step-text">Select the domains you're interested in — <strong>AI/ML, Web, Data, Cloud</strong> etc. These personalise results.</div></div>
         <div class="htu-step"><div class="htu-step-num">03</div><div class="htu-step-text">Set your experience level and work style, then click <strong>Predict My Career Paths</strong>.</div></div>
         <div class="htu-step"><div class="htu-step-num">04</div><div class="htu-step-text">Review your ranked matches — salary ranges, growth outlook, and the exact gaps to fill.</div></div>
-        <div class="htu-tip">Add at least 5–8 skills for the most accurate results. Be specific — <em>fastapi</em> is better than just <em>python frameworks</em>.</div>
+        <div class="htu-tip">
+          <span>Add at least 5–8 skills for the most accurate results. Be specific — <em>fastapi</em> is better than just <em>python frameworks</em>.</div></span>
       </div>
     </div>
 
@@ -1797,7 +2011,9 @@ footer {
    STATE
 ══════════════════════════════════════════════ */
 let cSkills = [], dSkills = [], rmSkills = [], cInterests = [];
-
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
 /* ══════════════════════════════════════════════
    SERVER STATUS
 ══════════════════════════════════════════════ */
@@ -1825,7 +2041,6 @@ checkServer();
 ══════════════════════════════════════════════ */
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('main-nav');
-  // Collapse after 60px of scrolling
   if (window.scrollY > 60) {
     nav.classList.add('collapsed');
   } else {
