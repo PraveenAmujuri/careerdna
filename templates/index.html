@@ -45,52 +45,165 @@
   --ease-out:    cubic-bezier(0, 0, .2, 1);
   --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
 }
+.hero-dna-col {
+  position: relative;
+  height: 560px;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .hero-dna-col {
+  position: relative;
+  z-index: 50; 
+}
+
+#dna-canvas-wrap {
+  position: absolute;
+  z-index: 60; 
+}
+}
+#dna-canvas-wrap {
+  position: absolute;
+  right: -80px;  
+  top: 0;
+
+  width: 117%;
+  height: 100%;
+
+  opacity: 1;
+  transform: translateY(40px);
+}
+#dna-canvas-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+background: linear-gradient(
+  to left,
+  rgba(245,240,232,0.6) 0%,
+  rgba(245,240,232,0.25) 25%,
+  transparent 55%
+);
+  pointer-events: none;
+  
+}
+.hero-wrap {
+  overflow: visible;
+}
+
+.hero-dna-col::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to left,
+    rgba(245,240,232,0.5) 0%,
+    rgba(245,240,232,0.2) 25%,
+    transparent 65%
+  );
+  z-index: 0;
+}
+#dna-canvas {
+  display: block;
+  cursor: crosshair;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+}
+/* ═════════════════════════════════════
+   DNA TOOLTIP — FULL OVERRIDE FIX
+   (paste at END of CSS)
+═════════════════════════════════════ */
+
+#dna-tooltip {
+  position: absolute !important;
+
+  /* Strong readable background */
+  background: linear-gradient(
+    to bottom,
+    rgba(30,26,22,0.98),
+    rgba(18,16,14,0.98)
+  ) !important;
+
+  color: #ffffff !important;
+
+  border-radius: 12px !important;
+  padding: 16px 20px !important;
+  z-index: 9999 !important;
+
+  font-family: var(--sans) !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+
+  max-width: 240px !important;
+  min-width: 190px !important;
+
+  pointer-events: none !important;
+
+  opacity: 0;
+  transform: translateY(10px) scale(.96);
+  transition: opacity .22s ease, transform .22s ease;
+
+  /* Strong separation from background */
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.04) !important;
+
+  border: 1px solid rgba(200,71,13,.45) !important;
+
+  outline: 1px solid rgba(0,0,0,.6);
+
+  z-index: 20;
+
+  /* subtle clarity boost */
+  backdrop-filter: blur(6px) saturate(1.1);
+
+  /* readability */
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+
+#dna-tooltip.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* TEXT FIXES */
+#dna-tooltip .tt-name {
+  color: #ffffff !important;
+}
+
+#dna-tooltip .tt-desc {
+  color: rgba(255,255,255,.85) !important;
+}
+
+#dna-tooltip .tt-action {
+  color: #ff7a3c !important;
+}
+.hero-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: 40px;
+  min-height: 560px;
+}
+
+@media (max-width: 900px) {
+  .hero-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-dna-col {
+    height: 420px;
+  }
+}
+@media (max-width: 768px) {
+  .hero-dna-col {
+    display: none;
+  }
+}
 ::selection {
   background: rgba(200,71,13,.35);
   color: #fff;
-}
-.hero-bg {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.flow-path {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-}
-.node {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-
-  background: var(--rust);
-  border-radius: 50%;
-
-  box-shadow: 0 0 10px rgba(200,71,13,0.6);
-}
-.node {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%,100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.5); opacity: 1; }
-}
-
-.flow-path {
-  stroke-dasharray: 500;
-  stroke-dashoffset: 500;
-  animation: draw 2s ease forwards;
-}
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
 }
 
 ::-moz-selection {
@@ -1745,7 +1858,7 @@ footer {
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
   </div>
-
+  <div class="hero-wrap">
   <div class="land-hero">
     <div class="land-kicker">AI Career Intelligence</div>
     <h1>
@@ -1764,23 +1877,20 @@ footer {
         How it works
       </button>
     </div>
-    <div class="hero-bg">
-
-  <!-- STEP 2: FLOW PATH -->
-  <svg class="flow-path" viewBox="0 0 400 400">
-    <path d="M50,300 C150,100 250,350 350,150"
-          stroke="var(--rust)"
-          stroke-width="3"
-          fill="none"/>
-  </svg>
-
-  <!-- STEP 3: NODES -->
-  <div class="node" style="top:60%; left:20%"></div>
-  <div class="node" style="top:30%; left:50%"></div>
-  <div class="node" style="top:70%; left:75%"></div>
-
-</div>
   </div>
+  <div class="hero-dna-col">
+  <div id="dna-canvas-wrap">
+    <canvas id="dna-canvas"></canvas>
+
+    <div id="dna-tooltip">
+      <span class="tt-icon" id="tt-icon"></span>
+      <div class="tt-name" id="tt-name"></div>
+      <div class="tt-desc" id="tt-desc"></div>
+      <div class="tt-action" id="tt-action"></div>
+    </div>
+  </div>
+  </div>
+</div>
 
   <div class="land-stats">
     <div class="land-stat">
@@ -2221,7 +2331,10 @@ footer {
       <div class="foot-contact">
         
         <a href="mailto:saipraveenamujuri@gmail.com" target="_blank">
-          📧 Gmail
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 1.99 2H20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Gmail
         </a>
 
         <a href="https://github.com/PraveenAmujuri" target="_blank">
@@ -2284,8 +2397,7 @@ async function checkServer() {
   }
 }
 checkServer();
-btn.classList.add("loading");
-btn.innerText = "Analyzing...";
+
 /* ══════════════════════════════════════════════
    SCROLL-DRIVEN LOGO FOLDING
 ══════════════════════════════════════════════ */
@@ -2633,6 +2745,300 @@ async function doRoadmap() {
     document.getElementById('rm-panel').innerHTML = h;
   } catch (e) { showError('rm-panel', e.message); }
 }
+/* ══════════════════════════════════════════════════════════
+   INTERACTIVE NEURAL NETWORK — CareerDNA ANN Visualiser
+   Architecture mirrors the real TF model:
+   Input(skills) → Dense(128,ReLU) → Dense(64,ReLU) → Dense(32,ReLU) → Output(careers,Softmax)
+══════════════════════════════════════════════════════════ */
+(function(){
+  const canvas  = document.getElementById('dna-canvas');
+  const wrap    = document.getElementById('dna-canvas-wrap');
+  const tooltip = document.getElementById('dna-tooltip');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const C = {
+    rust:'rgba(200,71,13,0.6)',
+    rustLight:'rgba(232,96,42,0.5)',
+    sage:'#4a6741',
+    ink:'#1a1714', ink60:'#5a544c', ink40:'#8c8579', ink20:'#b8b2a8', ink10:'#d4cfc8',
+    cream:'#f5f0e8', creamDeep:'#e4ddd0',
+  };
+
+  const LAYERS = [
+    { id:'input',  label:'Input',     sublabel:'Skill Vector',              nodes:6, color:C.ink40,    desc:'30-dimensional skill vector. Each node represents a skill category (Python, ML, Cloud…). Values are MinMax-normalised before entering the network.' },
+    { id:'h1',     label:'Dense 128', sublabel:'ReLU · BatchNorm · Drop 30%', nodes:7, color:C.rust,     desc:'128 neurons with ReLU activation f(x)=max(0,x). Batch Normalisation stabilises training. 30% Dropout randomly zeros neurons to prevent overfitting.' },
+    { id:'h2',     label:'Dense 64',  sublabel:'ReLU · BatchNorm · Drop 20%', nodes:6, color:C.rustLight, desc:'64 neurons — compresses skill patterns into abstract representations. Where skill combinations like "Python + ML + Cloud" are encoded together.' },
+    { id:'h3',     label:'Dense 32',  sublabel:'ReLU activation',            nodes:5, color:C.ink60,    desc:'32 neurons. Final compression — distils the essential career signal from your full skill profile before output classification.' },
+    { id:'output', label:'Softmax',   sublabel:'14 career probabilities',   nodes:5, color:C.sage,     desc:'14 output neurons, one per career path. Softmax converts raw logits to probabilities summing to 1. The highest probability = your top career match.' },
+  ];
+
+  const CAREER_LABELS = [
+  "AI/ML",
+  "Full Stack",
+  "Data Sci",
+  "DevOps",
+  "Cyber"
+];
+  const INPUT_LABELS  = ['Python','ML / AI','Web Dev','Cloud','Data','Security'];
+  const LAYER_TT = {
+    input:  { icon:'⚡', title:'Input layer — skill vector',      action:'Your skills → normalised 30-dim vector' },
+    h1:     { icon:'🔥', title:'Hidden layer 1 · 128 neurons',    action:'Click to fire a forward-pass burst →' },
+    h2:     { icon:'⚙️', title:'Hidden layer 2 · 64 neurons',     action:'Click to fire a forward-pass burst →' },
+    h3:     { icon:'🧠', title:'Hidden layer 3 · 32 neurons',     action:'Click to fire a forward-pass burst →' },
+    output: { icon:'🎯', title:'Output · 14 career probabilities', action:'Softmax probability distribution' },
+  };
+
+  let W, H, mouseX=-999, mouseY=-999, raf;
+  let nodePositions = [];
+  let hoveredLayer  = -1;
+  let signals       = [];
+  let time          = 0;
+  let lastBurst     = 0;
+  let burstLayer    = 0;
+
+  function resize(){
+    W = wrap.offsetWidth || 480;
+    H = wrap.offsetHeight || 560;
+    canvas.width  = W * devicePixelRatio;
+    canvas.height = H * devicePixelRatio;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    buildPositions();
+  }
+
+  function buildPositions(){
+    nodePositions = [];
+    const xPad  = W * 0.10;
+    const xStep = (W - xPad * 2) / (LAYERS.length - 1);
+    const yPad  = H * 0.14;
+    LAYERS.forEach((layer, li) => {
+      const x = xPad + li * xStep+20;
+      const n = layer.nodes;
+      const ySpan = H - yPad * 2;
+      for (let ni = 0; ni < n; ni++){
+        const y = n === 1 ? H/2 : yPad + ni * (ySpan / (n - 1));
+        const r = li === 0 || li === LAYERS.length-1 ? 13 : 10;
+        nodePositions.push({ x, y, layerIdx:li, nodeIdx:ni, r, layer });
+      }
+    });
+  }
+
+  function layerNodes(li){ return nodePositions.filter(n => n.layerIdx === li); }
+
+  function spawnSignal(fn, tn, delay, col){
+    signals.push({ x0:fn.x, y0:fn.y, x1:tn.x, y1:tn.y,
+      t: -delay, speed: 0.002 + Math.random()*0.002,
+      color: col, alpha: 0.6 + Math.random()*0.4, r: 3 + Math.random()*2 });
+  }
+
+  function triggerBurst(li){
+    if (li >= LAYERS.length - 1) return;
+    const from = layerNodes(li), to = layerNodes(li+1);
+    const col = li === LAYERS.length-2 ? C.sage : C.rust;
+    from.forEach(fn => {
+      const cnt = Math.min(to.length, 2 + Math.floor(Math.random()*3));
+      [...to].sort(()=>Math.random()-.5).slice(0,cnt).forEach((tn,i) => spawnSignal(fn, tn, i*0.05, col));
+    });
+  }
+
+  function drawConnections(){
+    for (let li = 0; li < LAYERS.length-1; li++){
+      const from = layerNodes(li), to = layerNodes(li+1);
+      const hl = hoveredLayer === li || hoveredLayer === li+1;
+      from.forEach(fn => to.forEach(tn => {
+        const near = Math.hypot(fn.x-mouseX, fn.y-mouseY)<28 || Math.hypot(tn.x-mouseX, tn.y-mouseY)<28;
+        ctx.beginPath(); ctx.moveTo(fn.x, fn.y); ctx.lineTo(tn.x, tn.y);
+        if (hl || near){ ctx.strokeStyle=`rgba(200,71,13,.4)`; ctx.lineWidth=1.1; }
+        else { ctx.strokeStyle=`rgba(26,23,20,.018)`; ctx.lineWidth=0.6; }
+        ctx.stroke();
+      }));
+    }
+  }
+
+  function drawNode(node, hov){
+    const li = node.layerIdx, isOut = li===LAYERS.length-1, isIn = li===0;
+    const pulse = hov ? 1+0.07*Math.sin(time*7) : 1;
+    const r = node.r *0.85* pulse;
+
+    if (hov){
+      const g = ctx.createRadialGradient(node.x, node.y, r*.5, node.x, node.y, r*2.8);
+      g.addColorStop(0,'rgba(200,71,13,.14)'); g.addColorStop(1,'rgba(200,71,13,0)');
+      ctx.beginPath(); ctx.arc(node.x, node.y, r*2.8, 0, Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+    }
+
+    // Ring
+    ctx.beginPath(); ctx.arc(node.x, node.y, r+(hov?4:2), 0, Math.PI*2);
+    ctx.strokeStyle = hov ? (isOut?C.sage:C.rust) : `rgba(26,23,20,${isIn?.18:isOut?.22:.10})`;
+    ctx.lineWidth = hov ? 2 : 0.9; ctx.stroke();
+
+    // Fill
+    // Depth-based fade (key change)
+    const depthFactor = 1 - (node.layerIdx * 0.12);  // deeper layers fade
+    const baseAlpha = isIn ? 0.5 : isOut ? 0.6 : 0.45;
+    const finalAlpha = hov ? 1 : baseAlpha * depthFactor;
+
+    // Slight color softening for background blend
+    function soften(color, alpha) {
+      return color.replace(/[\d\.]+\)$/g, `${alpha})`);
+    }
+
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+
+    if (isOut) {
+      ctx.fillStyle = hov
+        ? C.sage
+        : `rgba(74,103,65,${finalAlpha})`;
+    }
+    else if (isIn) {
+      ctx.fillStyle = hov
+        ? C.ink
+        : `rgba(26,23,20,${finalAlpha})`;
+    }
+    else {
+      ctx.fillStyle = node.layer.color;
+      ctx.globalAlpha = finalAlpha;
+    }
+
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Centre dot on hover
+    if (hov){ ctx.beginPath(); ctx.arc(node.x, node.y, r*.3, 0, Math.PI*2); ctx.fillStyle='rgba(255,255,255,.75)'; ctx.fill(); }
+
+    // Labels
+    ctx.font=`400 9px 'DM Mono',monospace`; ctx.textBaseline='middle';
+    if (isIn && INPUT_LABELS[node.nodeIdx]){
+      ctx.textAlign='right';
+      ctx.fillStyle = hov ? C.rust : C.ink40;
+      ctx.fillText(INPUT_LABELS[node.nodeIdx], node.x-r-6, node.y);
+    }
+    if (isOut && CAREER_LABELS[node.nodeIdx]){
+      ctx.textAlign='left';
+      ctx.fillStyle = hov ? C.sage : C.ink40;
+      ctx.fillText(CAREER_LABELS[node.nodeIdx], node.x+r+2, node.y);
+    }
+    ctx.textAlign='center';
+  }
+
+  function tickSignals(){
+    signals = signals.filter(s=>s.t<1.05);
+    signals.forEach(s => {
+      s.t += s.speed;
+      if (s.t < 0) return;
+      const t = Math.max(0, Math.min(1, s.t));
+      const x = s.x0+(s.x1-s.x0)*t, y = s.y0+(s.y1-s.y0)*t;
+      const tail = Math.max(0, t-.18);
+      const a = s.alpha * (1-Math.pow(t,3)) * (t<.15?t/.15:1);
+      const isSage = s.color===C.sage;
+      ctx.beginPath();
+      ctx.moveTo(s.x0+(s.x1-s.x0)*tail, s.y0+(s.y1-s.y0)*tail);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = isSage?`rgba(74,103,65,${a*.5})`:`rgba(200,71,13,${a*.45})`;
+      ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x, y, s.r*(1-t*.4), 0, Math.PI*2);
+      ctx.fillStyle = isSage?`rgba(74,103,65,${a})`:`rgba(232,96,42,${a})`;
+      ctx.fill();
+    });
+  }
+
+  function drawLayerLabel(layer, li, hov){
+    const nodes = layerNodes(li);
+    if (!nodes.length) return;
+    const x = nodes[0].x;
+    const topY = Math.min(...nodes.map(n=>n.y)) - 30;
+    ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.font=`500 11px 'Instrument Sans',system-ui,sans-serif`;
+    ctx.fillStyle = hov ? C.rust : C.ink60;
+    ctx.fillText(layer.label, x, topY);
+    ctx.font=`400 8.5px 'DM Mono',monospace`;
+    ctx.fillStyle = hov ? `rgba(200,71,13,.65)` : C.ink20;
+    ctx.fillText(layer.sublabel.split('·')[0].trim(), x, topY+12);
+  }
+
+  function drawBracket(li){
+    const nodes = layerNodes(li); if (!nodes.length) return;
+    const x = nodes[0].x, mr = Math.max(...nodes.map(n=>n.r));
+    const t = Math.min(...nodes.map(n=>n.y))-mr-8;
+    const b = Math.max(...nodes.map(n=>n.y))+mr+8;
+    const bw = mr+12;
+    ctx.beginPath();
+    ctx.moveTo(x-bw,t); ctx.lineTo(x-bw,b);
+    ctx.moveTo(x+bw,t); ctx.lineTo(x+bw,b);
+    ctx.strokeStyle='rgba(200,71,13,.28)'; ctx.lineWidth=1;
+    ctx.setLineDash([3,5]); ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  function updateTooltip(li){
+    if (li<0){ tooltip.classList.remove('show'); return; }
+    const layer=LAYERS[li], tt=LAYER_TT[layer.id];
+    const nodes=layerNodes(li); if (!nodes.length) return;
+    document.getElementById('tt-icon').textContent   = tt.icon;
+    document.getElementById('tt-name').textContent   = tt.title;
+    document.getElementById('tt-desc').textContent   = layer.desc;
+    document.getElementById('tt-action').textContent = tt.action;
+    const ttW=240, ttH=130, pad=10;
+    const avgX=nodes[0].x;
+    let tx=avgX-ttW/2, ty=Math.min(...nodes.map(n=>n.y))-ttH-46;
+    if (ty<pad) ty=Math.max(...nodes.map(n=>n.y))+22;
+    if (tx+ttW>W-pad) tx=W-ttW-pad;
+    if (tx<pad) tx=pad;
+    tooltip.style.left=tx+'px'; tooltip.style.top=ty+'px';
+    tooltip.classList.add('show');
+  }
+
+  function render(){
+    ctx.clearRect(0, 0, W, H);
+    time += 0.016;
+    if (time-lastBurst>3.2 && signals.length<10){
+      triggerBurst(burstLayer);
+      burstLayer=(burstLayer+1)%(LAYERS.length-1);
+      lastBurst=time;
+    }
+
+    // Detect hover
+    hoveredLayer=-1;
+    for (const node of nodePositions){
+      if (Math.hypot(node.x-mouseX, node.y-mouseY)<node.r+14){ hoveredLayer=node.layerIdx; break; }
+    }
+    if (hoveredLayer<0 && mouseX>0 && mouseX<W){
+      LAYERS.forEach((_,li)=>{ const nx=layerNodes(li)[0]?.x; if(nx&&Math.abs(mouseX-nx)<30) hoveredLayer=li; });
+    }
+
+    drawConnections();
+    tickSignals();
+    // Draw non-hovered first
+    nodePositions.forEach(n=>{ if(n.layerIdx!==hoveredLayer) drawNode(n,false); });
+    // Hovered layer on top
+    nodePositions.forEach(n=>{ if(n.layerIdx===hoveredLayer) drawNode(n, Math.hypot(n.x-mouseX,n.y-mouseY)<n.r+18); });
+    LAYERS.forEach((l,li)=>drawLayerLabel(l,li,li===hoveredLayer));
+    if (hoveredLayer>=0) drawBracket(hoveredLayer);
+    updateTooltip(hoveredLayer);
+    canvas.style.cursor = hoveredLayer>=0 ? 'pointer' : 'default';
+    raf=requestAnimationFrame(render);
+  }
+
+  canvas.addEventListener('mousemove',e=>{ const r=canvas.getBoundingClientRect(); mouseX=e.clientX-r.left; mouseY=e.clientY-r.top; });
+  canvas.addEventListener('mouseleave',()=>{ mouseX=-999; mouseY=-999; tooltip.classList.remove('show'); });
+  canvas.addEventListener('click',()=>{ if(hoveredLayer>=0&&hoveredLayer<LAYERS.length-1){ triggerBurst(hoveredLayer); setTimeout(()=>triggerBurst(hoveredLayer+1),340); } });
+  canvas.addEventListener('touchstart',e=>{ e.preventDefault(); const r=canvas.getBoundingClientRect(); mouseX=e.touches[0].clientX-r.left; mouseY=e.touches[0].clientY-r.top; },{passive:false});
+  canvas.addEventListener('touchend',e=>{ e.preventDefault(); if(hoveredLayer>=0) triggerBurst(hoveredLayer); mouseX=-999; mouseY=-999; },{passive:false});
+
+  function init(){
+    resize();
+    if(raf) cancelAnimationFrame(raf);
+    let d=0;
+    LAYERS.forEach((_,li)=>{ if(li<LAYERS.length-1){ setTimeout(()=>triggerBurst(li),d); d+=300; } });
+    render();
+  }
+
+  window.addEventListener('resize',resize);
+  if(document.readyState==='complete') setTimeout(init,100);
+  else window.addEventListener('load',()=>setTimeout(init,100));
+})();
 </script>
 </body>
 </html>
